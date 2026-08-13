@@ -1,0 +1,1416 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Inter:wght@400;600;700;800&display=swap');
+
+  :root {
+    --db-blue: #0082c3;
+    --db-navy: #04234c;
+    --db-navy-deep: #02101f;
+    --db-ink: #10151b;
+    --db-paper: #f5f7f6;
+    --db-line: #d8dfe2;
+    --db-green: #1f8a5f;
+    --db-amber: #c47a1f;
+    --db-red: #d9483f;
+    --db-red-dark: #8a231c;
+    --db-gold: #ffc23c;
+    --db-gold-au: #d97a2e;
+    --db-gold-au-dark: #8a4a0a;
+    --db-crate: #e2841f;
+    --db-crate-dark: #a85a12;
+    font-family: 'Inter', -apple-system, "Segoe UI", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  #chub {
+    color: var(--db-ink);
+    background:
+      radial-gradient(2px 2px at 10% 15%, rgba(255,255,255,0.5), transparent),
+      radial-gradient(2px 2px at 80% 8%, rgba(255,255,255,0.4), transparent),
+      radial-gradient(1.5px 1.5px at 45% 25%, rgba(255,255,255,0.35), transparent),
+      radial-gradient(1.5px 1.5px at 65% 40%, rgba(255,255,255,0.3), transparent),
+      radial-gradient(2px 2px at 25% 45%, rgba(255,255,255,0.3), transparent),
+      radial-gradient(ellipse at 50% -10%, #123a63 0%, #071c38 45%, var(--db-navy-deep) 100%);
+    background-attachment: fixed;
+    min-height: 100%;
+  }
+  #chub .wrap { max-width: 920px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  #chub .masthead {
+    position: relative;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 20px; margin-bottom: 24px; border-radius: 14px;
+    background: linear-gradient(160deg, #0a2f57, var(--db-navy-deep));
+    border: 2px solid var(--db-gold-au);
+    box-shadow: 0 0 0 1px rgba(217,122,46,0.15), 0 8px 24px rgba(0,0,0,0.35);
+    overflow: hidden;
+  }
+  #chub .masthead::before, #chub .masthead::after {
+    content: "📦"; position: absolute; font-size: 22px; opacity: 0.18;
+    animation: drift 7s ease-in-out infinite;
+  }
+  #chub .masthead::before { top: -6px; right: 14%; animation-delay: 0s; }
+  #chub .masthead::after { bottom: -8px; right: 4%; font-size: 16px; animation-delay: 1.8s; }
+  @keyframes drift { 0%,100% { transform: translateY(0) rotate(-4deg); } 50% { transform: translateY(-8px) rotate(4deg); } }
+
+  #chub .brand { display: flex; align-items: center; gap: 12px; position: relative; z-index: 1; }
+  #chub .brand .mark {
+    width: 38px; height: 38px; border-radius: 8px;
+    background: linear-gradient(160deg, var(--db-crate), var(--db-crate-dark));
+    border: 2px solid #6b3a0c;
+    display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; font-size: 16px;
+    transform: rotate(-6deg);
+    box-shadow: 0 3px 0 #6b3a0c;
+  }
+  #chub .brand .name {
+    font-family: 'Press Start 2P', monospace; font-weight: normal; font-size: 15px;
+    letter-spacing: -0.01em; color: var(--db-gold-au);
+    text-shadow: 0 0 12px rgba(217,122,46,0.5);
+  }
+  #chub .brand .sub { font-size: 10.5px; color: #7fb8e0; text-transform: uppercase; letter-spacing: 0.1em; margin-top: 4px; }
+
+  #chub .tabs { display: flex; gap: 6px; position: relative; z-index: 1; }
+  #chub .tab-btn {
+    border: 1.5px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.06); color: #cfe4f2;
+    padding: 8px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  #chub .tab-btn.active { background: var(--db-red); border-color: var(--db-red-dark); color: #fff; }
+  #chub .tab-btn:hover:not(.active) { border-color: var(--db-gold-au); color: var(--db-gold-au); }
+
+  #chub .card {
+    background: #fff; border: 1.5px solid var(--db-line); border-radius: 14px;
+    padding: 24px; margin-bottom: 18px;
+    box-shadow: 0 2px 12px rgba(4,35,76,0.06);
+  }
+  #chub .eyebrow {
+    font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.09em;
+    color: var(--db-crate-dark); margin-bottom: 6px;
+  }
+  #chub h1 { font-family: 'Press Start 2P', monospace; font-size: 19px; margin: 0 0 10px; line-height: 1.5; color: var(--db-navy); }
+  #chub h2 { font-family: 'Press Start 2P', monospace; font-size: 13px; margin: 0 0 16px; line-height: 1.5; color: var(--db-navy); }
+  #chub p.lede { color: #4a5a66; font-size: 14.5px; line-height: 1.5; margin: 0 0 18px; }
+
+  #chub .prize-banner {
+    position: relative;
+    background: linear-gradient(135deg, var(--db-navy), #0d3a6b);
+    color: #fff; border-radius: 14px; padding: 24px 26px; margin-bottom: 18px;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap;
+    border: 2px solid var(--db-gold-au);
+    box-shadow: 0 0 24px rgba(217,122,46,0.15);
+  }
+  #chub .prize-banner .plabel { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.09em; color: var(--db-gold-au); margin-bottom: 6px; font-weight: 700; }
+  #chub .prize-banner .pprize { font-size: 23px; font-weight: 800; }
+  #chub .prize-banner .ppartner { font-size: 13.5px; color: #cfe4f2; margin-top: 3px; }
+  #chub .prize-banner .pcount { text-align: right; }
+  #chub .prize-banner .pcount .n { font-size: 28px; font-weight: 800; line-height: 1; color: var(--db-gold-au); }
+  #chub .prize-banner .pcount .l { font-size: 11px; color: #8fc7ea; text-transform: uppercase; letter-spacing: 0.07em; }
+
+  #chub .promo-banner {
+    width: 100%; aspect-ratio: 4 / 1; border-radius: 14px; margin-bottom: 18px; display: block;
+    object-fit: cover; border: 2px solid var(--db-gold-au); background: var(--db-paper);
+  }
+  @media (max-width: 480px) {
+    #chub .promo-banner { aspect-ratio: 16 / 9; }
+  }
+
+  #chub label { display: block; font-size: 13px; font-weight: 600; color: var(--db-navy); margin: 14px 0 6px; }
+  #chub label.first { margin-top: 0; }
+  #chub input[type=text], #chub input[type=email], #chub input[type=url], #chub textarea {
+    width: 100%; padding: 10px 12px; border: 1.5px solid var(--db-line); border-radius: 8px;
+    font-size: 14px; font-family: inherit; background: var(--db-paper);
+  }
+  #chub input:focus, #chub textarea:focus { outline: none; border-color: var(--db-crate); background: #fff; }
+  #chub .hint { font-size: 12px; color: #7a8891; margin-top: 4px; }
+
+  #chub .task-row {
+    display: flex; align-items: flex-start; gap: 10px; padding: 12px 14px;
+    border: 1.5px dashed var(--db-line); border-radius: 10px; margin-bottom: 8px; background: var(--db-paper);
+  }
+  #chub .task-row input[type=checkbox] { margin-top: 2px; width: 17px; height: 17px; accent-color: var(--db-crate); flex-shrink: 0; }
+  #chub .task-row .tlabel { font-size: 14px; font-weight: 600; color: var(--db-ink); }
+  #chub .task-row .tdesc { font-size: 12.5px; color: #6b7a84; margin-top: 2px; }
+
+  #chub .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: linear-gradient(180deg, #ff7a5c, var(--db-red)); color: #fff;
+    border: 2px solid var(--db-red-dark); border-radius: 10px;
+    padding: 12px 20px; font-size: 13.5px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.03em;
+    cursor: pointer; transition: transform 0.08s, box-shadow 0.08s;
+    box-shadow: 0 4px 0 var(--db-red-dark);
+  }
+  #chub .btn:hover { filter: brightness(1.06); }
+  #chub .btn:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--db-red-dark); }
+  #chub .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  #chub .btn.secondary { background: #fff; color: var(--db-navy); border: 1.5px solid var(--db-line); box-shadow: none; text-transform: none; letter-spacing: normal; }
+  #chub .btn.secondary:hover { border-color: var(--db-crate); color: var(--db-crate-dark); }
+  #chub .btn.danger { background: linear-gradient(180deg, #e2554a, var(--db-red-dark)); border-color: #5c130f; box-shadow: 0 4px 0 #5c130f; }
+  #chub .btn.gold { background: linear-gradient(180deg, var(--db-gold), var(--db-crate-dark)); border-color: #6b3a0c; box-shadow: 0 4px 0 #6b3a0c; color: #2a1a02; }
+  #chub .btn.full { width: 100%; }
+
+  #chub .msg { padding: 12px 14px; border-radius: 9px; font-size: 13.5px; margin-bottom: 14px; }
+  #chub .msg.ok { background: #e7f5ee; color: var(--db-green); border: 1px solid #b9e0cb; }
+  #chub .msg.err { background: #fbeaea; color: var(--db-red); border: 1px solid #f0c6c6; }
+  #chub .msg.info { background: #e9f3fa; color: #0d5c8a; border: 1px solid #c3e0f0; }
+
+  #chub table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  #chub th { text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: #7a8891; padding: 8px 10px; border-bottom: 2px solid var(--db-line); }
+  #chub td { padding: 10px; border-bottom: 1px solid var(--db-line); vertical-align: top; }
+  #chub tr:last-child td { border-bottom: none; }
+  #chub .pill { display: inline-block; padding: 3px 9px; border-radius: 100px; font-size: 11px; font-weight: 700; }
+  #chub .pill.yes { background: #e7f5ee; color: var(--db-green); }
+  #chub .pill.no { background: #f4eeee; color: #9a8a8a; }
+  #chub .pill.eligible { background: #fff4e2; color: var(--db-amber); }
+  #chub .pill.confirmed { background: #e7f5ee; color: var(--db-green); }
+  #chub a.plink { color: var(--db-blue); text-decoration: none; font-weight: 600; }
+  #chub a.plink:hover { text-decoration: underline; }
+
+  #chub .stat-row { display: flex; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
+  #chub .stat { flex: 1; min-width: 120px; background: var(--db-paper); border: 1.5px solid var(--db-line); border-radius: 10px; padding: 14px 16px; }
+  #chub .stat .n { font-size: 24px; font-weight: 800; color: var(--db-crate-dark); }
+  #chub .stat .l { font-size: 11.5px; color: #6b7a84; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 2px; }
+
+  #chub .empty { text-align: center; padding: 40px 20px; color: #8494a0; }
+  #chub .empty .ic { font-size: 30px; margin-bottom: 8px; }
+
+  #chub .winner-box {
+    text-align: center; padding: 34px 20px; border-radius: 14px;
+    background: linear-gradient(135deg,#04234c,#0d3a6b); color: #fff; margin-bottom: 18px;
+    border: 2px solid var(--db-gold-au);
+    box-shadow: 0 0 24px rgba(217,122,46,0.18);
+  }
+  #chub .winner-box .wlabel { font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--db-gold-au); margin-bottom: 10px; }
+  #chub .winner-box .wname { font-size: 30px; font-weight: 800; margin-bottom: 4px; }
+  #chub .winner-box .whandle { font-size: 14px; color: #cfe4f2; }
+  #chub .spin { font-size: 26px; font-weight: 800; opacity: 0.85; }
+
+  #chub .toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--db-line); }
+  #chub .toggle-row:last-child { border-bottom: none; }
+  #chub .switch { position: relative; width: 42px; height: 24px; }
+  #chub .switch input { opacity: 0; width: 0; height: 0; }
+  #chub .slider { position: absolute; inset: 0; background: #d8dfe2; border-radius: 100px; cursor: pointer; transition: 0.2s; }
+  #chub .slider:before { content: ""; position: absolute; width: 18px; height: 18px; left: 3px; top: 3px; background: #fff; border-radius: 50%; transition: 0.2s; }
+  #chub .switch input:checked + .slider { background: var(--db-crate); }
+  #chub .switch input:checked + .slider:before { transform: translateX(18px); }
+
+  #chub .row-actions { display: flex; gap: 6px; }
+  #chub .icon-btn {
+    border: 1.5px solid var(--db-line); background: #fff; border-radius: 7px; width: 28px; height: 28px;
+    cursor: pointer; font-size: 13px; display: flex; align-items: center; justify-content: center;
+  }
+  #chub .icon-btn:hover { border-color: var(--db-crate); }
+  #chub .icon-btn.remove:hover { border-color: var(--db-red); color: var(--db-red); }
+
+  #chub .lockscreen { max-width: 360px; margin: 80px auto; text-align: center; }
+  #chub .lockscreen .ic { font-size: 34px; margin-bottom: 10px; }
+
+  .drawmode-overlay {
+    position: fixed; inset: 0; z-index: 9999;
+    background: radial-gradient(circle at 50% 30%, #0d3a6b, #04234c 70%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    color: #fff; text-align: center; padding: 40px 20px;
+  }
+  .drawmode-exit {
+    position: absolute; top: 24px; right: 28px; color: #cfe4f2; text-decoration: none;
+    font-size: 13px; font-weight: 600; border: 1.5px solid rgba(255,255,255,0.25);
+    padding: 8px 14px; border-radius: 100px; cursor: pointer; background: transparent;
+  }
+  .drawmode-exit:hover { border-color: #fff; }
+  .drawmode-eyebrow { font-size: 13px; text-transform: uppercase; letter-spacing: 0.15em; color: #8fc7ea; margin-bottom: 10px; }
+  .drawmode-prize { font-size: 22px; font-weight: 700; color: #cfe4f2; margin-bottom: 40px; }
+  .drawmode-name { font-size: 64px; font-weight: 800; letter-spacing: -0.02em; line-height: 1.05; margin-bottom: 8px; }
+  .drawmode-handle { font-size: 20px; color: #cfe4f2; margin-bottom: 40px; }
+  .drawmode-btn {
+    background: linear-gradient(135deg,var(--db-gold),var(--db-crate-dark)); color: #2a1a02; border: none;
+    padding: 20px 44px; font-size: 20px; font-weight: 800; border-radius: 100px; cursor: pointer;
+    box-shadow: 0 10px 40px rgba(255,194,60,0.35);
+  }
+  .drawmode-btn:hover { filter: brightness(1.08); }
+  .drawmode-count { font-size: 14px; color: #8fc7ea; margin-top: 16px; }
+  @media (max-width: 600px) {
+    .drawmode-name { font-size: 40px; }
+  }
+</style>
+
+<div id="chub">
+  <div class="wrap">
+    <div class="masthead">
+      <div class="brand">
+        <div class="mark">🎁</div>
+        <div>
+          <div class="name">WIN Australia</div>
+          <div class="sub">Campaigns that matter</div>
+        </div>
+      </div>
+    </div>
+    <div id="chub-body"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const root = document.getElementById('chub-body');
+  const ADMIN_CODE = "Dale07";
+  const CAMPAIGN_PREFIX = "campaign:";
+  let view = (window.location.hash === "#admin") ? "admin" : "join";
+  let unlocked = false;
+  // Which campaign Admin is currently managing (null = show the campaign list)
+  let adminCampaignId = null;
+
+  const blankCampaignTemplate = {
+    active: true,
+    partnerName: "",
+    partnerHandle: "",
+    prize: "",
+    campaignName: "New campaign",
+    description: "",
+    rules: "",
+    bannerImageUrl: "",
+    requireHandle: true,
+    requireFacebook: false,
+    requireEmail: true,
+    requireBrandAccount: false,
+    tasks: [
+      { id: "t1", label: "Follow us on Instagram", desc: "We check this manually before the draw.", link: "", points: "" },
+      { id: "t2", label: "Follow the partner's Instagram", desc: "Handle shown above.", link: "", points: "" },
+      { id: "t3", label: "Purchase a qualifying item + keep proof", desc: "Paste a link to your order confirmation or a screenshot upload (e.g. Drive/Imgur link).", link: "", points: "" }
+    ]
+  };
+
+  function esc(s){ return (s||"").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+  function slugify_(s){ return (s||"campaign").toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'') || "campaign"; }
+  // Google Drive share/view links (drive.google.com/file/d/ID/view...) don't work
+  // directly as an <img src> — this rewrites any Drive link into one that does,
+  // so both old uploads and manually-pasted Drive links display correctly.
+  function toDirectImageUrl_(url){
+    if (!url) return url;
+    const m = url.match(/drive\.google\.com\/file\/d\/([^/]+)/);
+    if (m) return "https://drive.google.com/thumbnail?id=" + m[1] + "&sz=w2000";
+    const m2 = url.match(/[?&]id=([^&]+)/);
+    if (m2 && url.includes('drive.google.com')) return "https://drive.google.com/thumbnail?id=" + m2[1] + "&sz=w2000";
+    return url;
+  }
+  function campaignLink_(id){
+    return window.location.origin + window.location.pathname + "?c=" + encodeURIComponent(id);
+  }
+  function getUrlCampaignId_(){
+    return new URLSearchParams(window.location.search).get('c');
+  }
+  function render(){ view==="join" ? renderJoin() : renderAdmin(); }
+  window.addEventListener('hashchange', () => {
+    view = (window.location.hash === "#admin") ? "admin" : "join";
+    render();
+  });
+
+  // ---------- STORAGE LAYER (Google Apps Script Web App + Sheet backend) ----------
+  // Paste the /exec URL of your deployed Apps Script Web App here after setup.
+  // This should be a PERSONAL-account backend (not Decathlon's) — separate from
+  // the Decathlon Hub's backend, matching the same account split already used
+  // for Prize Machine. WIN Australia and WIN Global can share ONE personal
+  // backend if you're fine with their campaigns appearing in one shared admin
+  // list, or you can deploy two separate personal backends for a cleaner split.
+  const API_URL = "https://script.google.com/macros/s/AKfycbywbGkSEC7y3tJFCo5eU2vXDArP-sqCQD8qXV0YRS_glMlufVj2izeuzrchCZBkX0-xqQ/exec";
+
+  async function apiCall(params){
+    const url = API_URL + "?" + new URLSearchParams(params).toString();
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("API error " + res.status);
+    return res.json();
+  }
+  async function kvGet(key){
+    const r = await apiCall({ action: "get", key });
+    return r && r.value !== undefined && r.value !== null ? { value: r.value } : null;
+  }
+  async function kvSet(key, value){
+    await apiCall({ action: "set", key, value });
+  }
+  async function kvList(prefix){
+    const r = await apiCall({ action: "list", prefix });
+    return r && r.keys ? r.keys : [];
+  }
+  async function kvDelete(key){
+    await apiCall({ action: "delete", key });
+  }
+  function fileToBase64_(file){
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => {
+        const commaIdx = reader.result.indexOf(',');
+        resolve(reader.result.slice(commaIdx + 1));
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+  async function uploadScreenshot(file){
+    const base64 = await fileToBase64_(file);
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" }, // avoids CORS preflight on Apps Script
+      body: JSON.stringify({
+        action: "uploadImage",
+        filename: file.name,
+        mimeType: file.type || "image/png",
+        base64: base64
+      })
+    });
+    if (!res.ok) throw new Error("Upload failed " + res.status);
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    return data.url;
+  }
+
+  // ---------- MULTI-CAMPAIGN CONFIG STORAGE ----------
+  async function getCampaign(id){
+    try {
+      const r = await kvGet(CAMPAIGN_PREFIX + id);
+      return r ? JSON.parse(r.value) : null;
+    } catch(e){ return null; }
+  }
+  async function saveCampaign(cfg){
+    await kvSet(CAMPAIGN_PREFIX + cfg.id, JSON.stringify(cfg));
+  }
+  async function listCampaigns(){
+    try {
+      const keys = await kvList(CAMPAIGN_PREFIX);
+      const out = [];
+      for (const k of keys){
+        try {
+          const v = await kvGet(k);
+          if (v) out.push(JSON.parse(v.value));
+        } catch(e){}
+      }
+      return out;
+    } catch(e){ return []; }
+  }
+  async function createCampaign(fromTemplate){
+    const name = fromTemplate.campaignName || "New campaign";
+    const id = slugify_(name) + "-" + Date.now();
+    const cfg = { ...fromTemplate, id };
+    await saveCampaign(cfg);
+    return cfg;
+  }
+
+  async function listEntries(){
+    try {
+      const keys = await kvList("entry:");
+      if (!keys.length) return [];
+      const out = [];
+      for (const k of keys){
+        try {
+          const v = await kvGet(k);
+          if (v) out.push(JSON.parse(v.value));
+        } catch(e){}
+      }
+      out.sort((a,b) => (b.ts||0) - (a.ts||0));
+      return out;
+    } catch(e){ return []; }
+  }
+  async function saveEntry(entry){
+    const key = "entry:" + entry.ts + "-" + Math.random().toString(36).slice(2,8);
+    await kvSet(key, JSON.stringify(entry));
+  }
+  async function deleteEntry(ts){
+    const keys = await kvList("entry:");
+    for (const k of keys){
+      const v = await kvGet(k);
+      if (v){
+        const parsed = JSON.parse(v.value);
+        if (String(parsed.ts) === String(ts)){
+          await kvDelete(k);
+          return;
+        }
+      }
+    }
+  }
+  function scoreForEntry_(entry, cfg){
+    const verified = entry.taskVerified || {};
+    return cfg.tasks.reduce((sum, t) => sum + (verified[t.id] ? (Number(t.points) || 0) : 0), 0);
+  }
+  function campaignHasPoints_(cfg){
+    return cfg.tasks.some(t => Number(t.points) > 0);
+  }
+
+  // ---------- JOIN VIEW ----------
+  async function renderJoin(){
+    root.innerHTML = `<div class="card"><div class="empty"><div class="ic">⏳</div>Loading…</div></div>`;
+    const id = getUrlCampaignId_();
+
+    if (!id){
+      // No specific campaign in the link — show a picker of active campaigns
+      const all = await listCampaigns();
+      const active = all.filter(c => c.active);
+      if (!active.length){
+        root.innerHTML = `
+          <div class="card">
+            <div class="empty">
+              <div class="ic">💤</div>
+              <div style="font-weight:700;color:var(--db-navy);margin-bottom:4px;">No campaigns running right now</div>
+              <div style="font-size:13.5px;">Check back soon.</div>
+            </div>
+          </div>`;
+        return;
+      }
+      root.innerHTML = `
+        <div class="card">
+          <div class="eyebrow">WIN Australia</div>
+          <h1>Current campaigns</h1>
+          <p class="lede">Pick one to enter.</p>
+          <div id="campaign-picker"></div>
+        </div>`;
+      const wrap = document.getElementById('campaign-picker');
+      active.forEach(c => {
+        const a = document.createElement('a');
+        a.href = campaignLink_(c.id);
+        a.style.cssText = "display:block;text-decoration:none;";
+        a.innerHTML = `
+          <div class="task-row" style="cursor:pointer;">
+            <div style="flex:1;">
+              <div class="tlabel">${esc(c.campaignName)}</div>
+              <div class="tdesc">${esc(c.prize || '')}</div>
+            </div>
+          </div>`;
+        wrap.appendChild(a);
+      });
+      return;
+    }
+
+    const cfg = await getCampaign(id);
+    if (!cfg){
+      root.innerHTML = `
+        <div class="card">
+          <div class="empty">
+            <div class="ic">🔍</div>
+            <div style="font-weight:700;color:var(--db-navy);margin-bottom:4px;">Campaign not found</div>
+            <div style="font-size:13.5px;"><a class="plink" href="${esc(window.location.origin + window.location.pathname)}">See current campaigns</a></div>
+          </div>
+        </div>`;
+      return;
+    }
+    if (!cfg.active){
+      root.innerHTML = `
+        <div class="card">
+          <div class="empty">
+            <div class="ic">💤</div>
+            <div style="font-weight:700;color:var(--db-navy);margin-bottom:4px;">This campaign has closed</div>
+            <div style="font-size:13.5px;"><a class="plink" href="${esc(window.location.origin + window.location.pathname)}">See current campaigns</a></div>
+          </div>
+        </div>`;
+      return;
+    }
+
+    root.innerHTML = `
+      ${cfg.bannerImageUrl ? `<img class="promo-banner" src="${esc(toDirectImageUrl_(cfg.bannerImageUrl))}" alt="${esc(cfg.partnerName)} promo banner" />` : ''}
+      <div class="prize-banner">
+        <div>
+          <div class="plabel">Current prize</div>
+          <div class="pprize">${esc(cfg.prize)}</div>
+          <div class="ppartner">Co-hosted with ${esc(cfg.partnerName)} · ${esc(cfg.partnerHandle)}</div>
+        </div>
+        <div class="pcount">
+          <div class="n" id="join-entrycount">–</div>
+          <div class="l">entries so far</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="eyebrow">${esc(cfg.campaignName)}</div>
+        <h1>Complete the tasks, get your entry</h1>
+        <p class="lede">Finish everything below, submit your details, and you're in the draw. We manually check proof before winners are confirmed — fair and square.</p>
+        ${cfg.description ? `<p class="lede" style="margin-top:-10px;">${esc(cfg.description)}</p>` : ''}
+        ${cfg.rules ? `
+        <details style="margin-bottom:18px;">
+          <summary style="cursor:pointer; font-weight:600; font-size:13.5px; color:var(--db-blue);">Rules & eligibility</summary>
+          <p class="lede" style="margin-top:8px; white-space:pre-wrap;">${esc(cfg.rules)}</p>
+        </details>` : ''}
+        <div id="join-msg"></div>
+
+        <form id="join-form">
+          <label class="first">Your name</label>
+          <input type="text" id="f-name" required />
+
+          ${cfg.requireHandle !== false ? `
+          <label>Your Instagram handle</label>
+          <input type="text" id="f-handle" placeholder="@yourhandle" required />
+          ` : ''}
+
+          ${cfg.requireFacebook ? `
+          <label>Your Facebook profile link</label>
+          <input type="text" id="f-facebook" placeholder="facebook.com/yourname" required />
+          ` : ''}
+
+          ${cfg.requireEmail !== false ? `
+          <label>Email</label>
+          <input type="email" id="f-email" required />
+          ` : ''}
+
+          ${cfg.requireBrandAccount ? `
+          <label>${esc(cfg.accountFieldLabel || 'Your account username or email')}</label>
+          <input type="text" id="f-decathlon-account" placeholder="e.g. the email/username you use for your account with us" required />
+          ${cfg.accountSignupUrl ? `<div class="hint">Don't have one yet? <a class="plink" href="${esc(cfg.accountSignupUrl)}" target="_blank" rel="noopener">Create a free account here ↗</a>, then come back and enter it above.</div>` : ''}
+          ` : ''}
+
+          <label style="margin-top:22px;">Tasks — screenshot each one</label>
+          <div id="join-tasks"></div>
+
+          <button type="submit" class="btn full" style="margin-top:20px;">Submit entry</button>
+        </form>
+      </div>
+    `;
+
+    const tasksWrap = document.getElementById('join-tasks');
+    const uploadedProofs = {};
+    cfg.tasks.forEach(t => {
+      const row = document.createElement('div');
+      row.className = 'task-row';
+      row.style.flexDirection = 'column';
+      row.style.alignItems = 'stretch';
+      row.innerHTML = `
+        <div style="display:flex; gap:10px; align-items:flex-start;">
+          <input type="checkbox" required data-task="${esc(t.id)}" id="task-${esc(t.id)}"/>
+          <div style="flex:1;">
+            <label for="task-${esc(t.id)}" class="tlabel" style="margin:0;cursor:pointer;">${esc(t.label)}${Number(t.points) > 0 ? ` <span style="color:var(--db-blue);font-weight:700;">· ${Number(t.points)} pts</span>` : ''}</label>
+            <div class="tdesc">${esc(t.desc||"")}</div>
+          </div>
+        </div>
+        <div style="margin-top:10px; display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+          ${t.link ? `<a class="btn secondary" href="${esc(t.link)}" target="_blank" rel="noopener" style="padding:9px 14px; font-size:13px; text-decoration:none;">↗ Go do this</a>` : ''}
+          <label class="btn secondary" style="cursor:pointer; padding:9px 14px; font-size:13px;">
+            📷 Upload screenshot
+            <input type="file" accept="image/*" data-upload-for="${esc(t.id)}" style="display:none;" />
+          </label>
+          <span style="font-size:12.5px; color:#8494a0;">or</span>
+          <input type="url" data-proof-for="${esc(t.id)}" placeholder="paste a link instead" style="flex:1; min-width:160px;"/>
+        </div>
+        <div data-status-for="${esc(t.id)}" style="font-size:12.5px; margin-top:4px;"></div>`;
+      tasksWrap.appendChild(row);
+    });
+
+    tasksWrap.querySelectorAll('[data-upload-for]').forEach(input => {
+      input.addEventListener('change', async (e) => {
+        const taskId = e.target.dataset.uploadFor;
+        const statusEl = tasksWrap.querySelector(`[data-status-for="${taskId}"]`);
+        const linkInput = tasksWrap.querySelector(`[data-proof-for="${taskId}"]`);
+        const file = e.target.files[0];
+        if (!file) return;
+        statusEl.innerHTML = `<span style="color:#7a8891;">Uploading…</span>`;
+        try {
+          const url = await uploadScreenshot(file);
+          uploadedProofs[taskId] = url;
+          linkInput.value = "";
+          linkInput.disabled = true;
+          linkInput.placeholder = "using uploaded screenshot ✓";
+          statusEl.innerHTML = `<span style="color:var(--db-green);">✓ Uploaded — you're set for this one.</span>`;
+        } catch(err){
+          statusEl.innerHTML = `<span style="color:var(--db-red);">Upload failed: ${esc(err.message || String(err))}</span>`;
+        }
+      });
+    });
+
+    listEntries().then(entries => {
+      const count = entries.filter(en => en.campaignId === cfg.id).length;
+      document.getElementById('join-entrycount').textContent = count;
+    });
+
+    document.getElementById('join-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = document.getElementById('join-msg');
+      const btn = e.target.querySelector('button[type=submit]');
+      btn.disabled = true; btn.textContent = "Submitting…";
+      const val_ = (elId) => { const el = document.getElementById(elId); return el ? el.value.trim() : ""; };
+      try {
+        const handle = val_('f-handle');
+        const existing = await listEntries();
+        if (handle && existing.some(en => en.campaignId === cfg.id && (en.handle||'').toLowerCase() === handle.toLowerCase())){
+          msg.innerHTML = `<div class="msg err">This Instagram handle has already entered this campaign.</div>`;
+          btn.disabled = false; btn.textContent = "Submit entry";
+          return;
+        }
+        const tasksProof = {};
+        let missing = [];
+        cfg.tasks.forEach(t => {
+          const linkInput = document.querySelector(`[data-proof-for="${t.id}"]`);
+          const value = uploadedProofs[t.id] || (linkInput ? linkInput.value.trim() : "");
+          if (!value) missing.push(t.label);
+          tasksProof[t.id] = value;
+        });
+        if (missing.length){
+          msg.innerHTML = `<div class="msg err">Please upload a screenshot or paste a link for: ${esc(missing.join(', '))}.</div>`;
+          btn.disabled = false; btn.textContent = "Submit entry";
+          return;
+        }
+        const confirmCode = "DK-" + String(Date.now()).slice(-6);
+        const entry = {
+          ts: Date.now(),
+          confirmCode: confirmCode,
+          name: val_('f-name'),
+          handle: handle,
+          facebookProfile: val_('f-facebook'),
+          email: val_('f-email'),
+          decathlonAccount: val_('f-decathlon-account'),
+          tasksProof: tasksProof,
+          tasksDone: cfg.tasks.map(t => t.id),
+          taskVerified: {},
+          eligible: null,
+          campaignId: cfg.id,
+          campaign: cfg.campaignName,
+          taskLabels: cfg.tasks.map(t => ({ id: t.id, label: t.label, points: t.points || "" }))
+        };
+        await saveEntry(entry);
+        root.innerHTML = `
+          <div class="card" style="text-align:center;">
+            <div style="font-size:30px; margin-bottom:8px;">🎉</div>
+            <h2 style="margin-bottom:6px;">You're entered!</h2>
+            <p class="lede">We'll verify your proof before the draw — good luck.</p>
+            <div style="background:var(--db-paper); border:1px solid var(--db-line); border-radius:10px; padding:14px; display:inline-block;">
+              <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.07em; color:#7a8891;">Your confirmation code</div>
+              <div style="font-size:20px; font-weight:800; color:var(--db-navy); letter-spacing:0.03em;">${confirmCode}</div>
+            </div>
+            <div class="hint" style="margin-top:10px;">Keep this if you want to follow up about your entry.</div>
+          </div>`;
+        return;
+      } catch(err){
+        msg.innerHTML = `<div class="msg err">Something went wrong submitting your entry. Please try again.</div>`;
+      }
+      btn.disabled = false; btn.textContent = "Submit entry";
+    });
+  }
+
+  // ---------- ADMIN VIEW ----------
+  function renderLock(){
+    root.innerHTML = `
+      <div class="lockscreen">
+        <div class="ic">🔒</div>
+        <h2>Admin access</h2>
+        <p class="lede">Enter the campaign admin code to manage campaigns.</p>
+        <div id="lock-msg"></div>
+        <input type="text" id="lock-code" placeholder="Admin code" style="text-align:center;margin-bottom:12px;" />
+        <button class="btn full" id="lock-submit">Unlock</button>
+      </div>`;
+    document.getElementById('lock-submit').addEventListener('click', () => {
+      const val = document.getElementById('lock-code').value;
+      if (val === ADMIN_CODE){ unlocked = true; renderAdmin(); }
+      else { document.getElementById('lock-msg').innerHTML = `<div class="msg err">Incorrect code.</div>`; }
+    });
+    document.getElementById('lock-code').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') document.getElementById('lock-submit').click();
+    });
+  }
+
+  async function renderAdmin(){
+    if (!unlocked){ renderLock(); return; }
+    if (!adminCampaignId){ renderCampaignList(); return; }
+    renderCampaignManage(adminCampaignId);
+  }
+
+  // ---------- ADMIN: campaign list (top level) ----------
+  async function renderCampaignList(){
+    root.innerHTML = `<div class="card"><div class="empty"><div class="ic">⏳</div>Loading campaigns…</div></div>`;
+    const campaigns = await listCampaigns();
+    const entries = await listEntries();
+
+    root.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <div style="font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:var(--db-blue);">Admin view (not visible to entrants)</div>
+        <a href="#" id="back-to-public" style="font-size:12.5px; color:#7a8891; text-decoration:none;">← Back to public page</a>
+      </div>
+
+      <div class="card">
+        <h2>Find entry by confirmation code</h2>
+        <p class="lede">Entrant emails you a code like DK-698452? Look it up here — searches across every campaign.</p>
+        <div style="display:flex; gap:10px;">
+          <input type="text" id="code-lookup" placeholder="DK-698452 or just 698452" style="flex:1;" />
+          <button class="btn secondary" id="code-search" type="button" style="white-space:nowrap;">Find</button>
+        </div>
+        <div id="code-result" style="margin-top:12px;"></div>
+      </div>
+
+      <div class="card">
+        <h2>Quick handle check</h2>
+        <p class="lede">Paste any Instagram handle to jump straight to their profile.</p>
+        <div style="display:flex; gap:10px;">
+          <input type="text" id="quick-handle" placeholder="@handle" style="flex:1;" />
+          <button class="btn secondary" id="quick-open" type="button" style="white-space:nowrap;">Open profile ↗</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <h2 style="margin:0;">Your campaigns</h2>
+          <button class="btn" id="new-campaign-btn" type="button">+ New campaign</button>
+        </div>
+        <p class="lede">Each campaign has its own link and its own entries. Click one to manage it.</p>
+        <div id="campaign-list"></div>
+      </div>
+    `;
+
+    document.getElementById('back-to-public').addEventListener('click', (e) => {
+      e.preventDefault();
+      window.location.hash = '';
+      window.location.search = '';
+    });
+
+    const listEl = document.getElementById('campaign-list');
+    if (!campaigns.length){
+      listEl.innerHTML = `<div class="empty"><div class="ic">📭</div>No campaigns yet — click '+ New campaign' to create your first one.</div>`;
+    } else {
+      campaigns.forEach(c => {
+        const count = entries.filter(en => en.campaignId === c.id).length;
+        const row = document.createElement('div');
+        row.className = 'task-row';
+        row.style.alignItems = 'center';
+        row.innerHTML = `
+          <div style="flex:1;">
+            <div class="tlabel">${esc(c.campaignName)} ${c.active ? '<span class="pill confirmed">Live</span>' : '<span class="pill no">Closed</span>'}</div>
+            <div class="tdesc">${esc(c.prize || 'No prize set')} · ${count} ${count === 1 ? 'entry' : 'entries'}</div>
+          </div>
+          <div class="row-actions">
+            <button class="btn secondary" type="button" data-copy="${esc(campaignLink_(c.id))}" style="font-size:12.5px;padding:8px 12px;">Copy link</button>
+            <button class="btn" type="button" data-manage="${esc(c.id)}" style="font-size:12.5px;padding:8px 12px;">Manage</button>
+          </div>`;
+        listEl.appendChild(row);
+      });
+      listEl.querySelectorAll('[data-manage]').forEach(b => b.addEventListener('click', (e) => {
+        adminCampaignId = e.target.dataset.manage;
+        renderAdmin();
+      }));
+      listEl.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', async (e) => {
+        try {
+          await navigator.clipboard.writeText(e.target.dataset.copy);
+          const old = e.target.textContent;
+          e.target.textContent = "Copied!";
+          setTimeout(() => { e.target.textContent = old; }, 1500);
+        } catch(err){ prompt("Copy this link:", e.target.dataset.copy); }
+      }));
+    }
+
+    document.getElementById('new-campaign-btn').addEventListener('click', async () => {
+      const cfg = await createCampaign(blankCampaignTemplate);
+      adminCampaignId = cfg.id;
+      renderAdmin();
+    });
+
+    wireGlobalAdminTools_();
+  }
+
+  function wireGlobalAdminTools_(){
+    document.getElementById('quick-open').addEventListener('click', () => {
+      const raw = document.getElementById('quick-handle').value.trim().replace(/^@/, '');
+      if (raw) window.open('https://instagram.com/' + encodeURIComponent(raw), '_blank', 'noopener');
+    });
+    document.getElementById('quick-handle').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') document.getElementById('quick-open').click();
+    });
+    async function runCodeSearch(){
+      const resultEl = document.getElementById('code-result');
+      const raw = document.getElementById('code-lookup').value.trim().toUpperCase().replace(/^DK-?/, '');
+      if (!raw){ resultEl.innerHTML = ''; return; }
+      resultEl.innerHTML = `<div style="color:#7a8891;font-size:13px;">Searching…</div>`;
+      const allEntries = await listEntries();
+      const match = allEntries.find(en => {
+        const stored = (en.confirmCode || '').replace(/^DK-?/, '');
+        return stored === raw || String(en.ts).slice(-6) === raw;
+      });
+      if (!match){
+        resultEl.innerHTML = `<div class="msg err" style="margin:0;">No entry found with that code.</div>`;
+        return;
+      }
+      const statusLabel = match.eligible === true ? "Eligible" : match.eligible === false ? "Rejected" : "Pending review";
+      resultEl.innerHTML = `
+        <div class="task-row" style="flex-direction:column;align-items:stretch;">
+          <div style="font-weight:700;">${esc(match.name)} — ${esc(match.handle || 'no handle')}</div>
+          <div style="color:#7a8891;font-size:13px;">${esc(match.email || '')}</div>
+          <div style="color:#7a8891;font-size:13px;">Campaign: ${esc(match.campaign || '')}</div>
+          <div style="margin-top:6px;"><span class="pill ${match.eligible===true?'confirmed':match.eligible===false?'no':'eligible'}">${esc(statusLabel)}</span></div>
+        </div>`;
+    }
+    document.getElementById('code-search').addEventListener('click', runCodeSearch);
+    document.getElementById('code-lookup').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') runCodeSearch();
+    });
+  }
+
+  // ---------- ADMIN: manage one campaign ----------
+  async function renderCampaignManage(id){
+    root.innerHTML = `<div class="card"><div class="empty"><div class="ic">⏳</div>Loading campaign…</div></div>`;
+    const cfg = await getCampaign(id);
+    if (!cfg){
+      adminCampaignId = null;
+      renderAdmin();
+      return;
+    }
+    const allEntries = await listEntries();
+    const scopedEntries = allEntries.filter(en => en.campaignId === cfg.id);
+
+    const totalTasks = cfg.tasks.length;
+    const eligibleCount = scopedEntries.filter(e => e.eligible === true).length;
+    const pendingCount = scopedEntries.filter(e => e.eligible === null || e.eligible === undefined).length;
+    const usesPoints = campaignHasPoints_(cfg);
+
+    root.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <a href="#" id="back-to-campaigns" style="font-size:12.5px; color:#7a8891; text-decoration:none;">← All campaigns</a>
+        <a href="${esc(campaignLink_(cfg.id))}" target="_blank" style="font-size:12.5px; color:var(--db-blue); text-decoration:none;">View public page ↗</a>
+      </div>
+
+      <div class="card">
+        <h2>🎰 Mystery Prize Picker links</h2>
+        <p class="lede" style="margin-bottom:10px;">Ready-to-copy links for this campaign's prize machine — no more hand-typing the URL.</p>
+        <label class="first" style="margin-top:0;">Which version</label>
+        <select id="pm-version">
+          <option value="decathlon">Decathlon (blue)</option>
+          <option value="general" selected>WIN Australia (red)</option>
+          <option value="global">WIN Global (gold)</option>
+        </select>
+        <label>Campaign slug</label>
+        <input type="text" id="pm-slug" value="${esc(cfg.id)}" />
+        <div class="hint">This becomes ?campaign=... in the link. Defaults to this campaign's ID — change it if you want this campaign to point at a different prize pool.</div>
+        <div id="pm-links" style="margin-top:14px;"></div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat"><div class="n">${scopedEntries.length}</div><div class="l">Entries</div></div>
+        <div class="stat"><div class="n">${pendingCount}</div><div class="l">Awaiting review</div></div>
+        <div class="stat"><div class="n">${eligibleCount}</div><div class="l">Confirmed eligible</div></div>
+      </div>
+
+      ${usesPoints ? `
+      <div class="card">
+        <h2>Leaderboard</h2>
+        <p class="lede">Ranked by points earned from verified tasks only — self-declared but unverified tasks don't count yet.</p>
+        <label class="first" style="margin-top:0;">Show top</label>
+        <input type="number" id="leaderboard-size" min="1" max="100" value="${cfg.leaderboardSize || 10}" style="max-width:120px;" />
+        <div id="leaderboard-area" style="margin-top:14px;"></div>
+      </div>` : ''}
+
+      <div class="card">
+        <h2>Campaign setup</h2>
+        <div id="setup-msg"></div>
+        <div class="toggle-row">
+          <div>
+            <div style="font-weight:700;font-size:14px;">Campaign live</div>
+            <div class="tdesc">Entrants can only submit while this is on.</div>
+          </div>
+          <label class="switch"><input type="checkbox" id="s-active" ${cfg.active ? 'checked' : ''}/><span class="slider"></span></label>
+        </div>
+        <div class="toggle-row">
+          <div>
+            <div style="font-weight:700;font-size:14px;">Require Instagram handle</div>
+            <div class="tdesc">Turn off for campaigns that don't need it.</div>
+          </div>
+          <label class="switch"><input type="checkbox" id="s-req-handle" ${cfg.requireHandle !== false ? 'checked' : ''}/><span class="slider"></span></label>
+        </div>
+        <div class="toggle-row">
+          <div>
+            <div style="font-weight:700;font-size:14px;">Require Facebook profile</div>
+            <div class="tdesc">Turn on for campaigns that need Facebook instead of/alongside Instagram.</div>
+          </div>
+          <label class="switch"><input type="checkbox" id="s-req-facebook" ${cfg.requireFacebook ? 'checked' : ''}/><span class="slider"></span></label>
+        </div>
+        <div class="toggle-row">
+          <div>
+            <div style="font-weight:700;font-size:14px;">Require email</div>
+            <div class="tdesc">Turn off for campaigns that don't need it.</div>
+          </div>
+          <label class="switch"><input type="checkbox" id="s-req-email" ${cfg.requireEmail !== false ? 'checked' : ''}/><span class="slider"></span></label>
+        </div>
+        <div class="toggle-row">
+          <div>
+            <div style="font-weight:700;font-size:14px;">Require an account field</div>
+            <div class="tdesc">Useful for driving signups to your own site/app. Off by default.</div>
+          </div>
+          <label class="switch"><input type="checkbox" id="s-req-decathlon" ${cfg.requireBrandAccount ? 'checked' : ''}/><span class="slider"></span></label>
+        </div>
+        <label class="first">Account field label <span style="font-weight:400;color:#8494a0;">(only shown if the toggle above is on)</span></label>
+        <input type="text" id="s-account-label" value="${esc(cfg.accountFieldLabel || '')}" placeholder="e.g. Your [Brand] account username or email" />
+        <label>Account signup link <span style="font-weight:400;color:#8494a0;">(optional)</span></label>
+        <input type="url" id="s-account-url" value="${esc(cfg.accountSignupUrl || '')}" placeholder="https://yoursite.com/signup" />
+        <label class="first">Campaign name</label>
+        <input type="text" id="s-name" value="${esc(cfg.campaignName)}" />
+        <label>Partner name</label>
+        <input type="text" id="s-partner" value="${esc(cfg.partnerName)}" />
+        <label>Partner Instagram handle</label>
+        <input type="text" id="s-handle" value="${esc(cfg.partnerHandle)}" />
+        <label>Prize description</label>
+        <input type="text" id="s-prize" value="${esc(cfg.prize)}" />
+        <label>Campaign description <span style="font-weight:400;color:#8494a0;">(optional)</span></label>
+        <textarea id="s-description" rows="3" placeholder="A sentence or two about the campaign — shown to entrants above the tasks.">${esc(cfg.description || '')}</textarea>
+        <label>Rules / eligibility <span style="font-weight:400;color:#8494a0;">(optional)</span></label>
+        <textarea id="s-rules" rows="5" placeholder="e.g. Open to AU residents 18+. One entry per person.">${esc(cfg.rules || '')}</textarea>
+        <div class="hint">Shown to entrants in a collapsible "Rules & eligibility" section. Leave blank to hide it.</div>
+        <label>Promo banner image <span style="font-weight:400;color:#8494a0;">(optional)</span></label>
+        <div style="display:flex; gap:8px; align-items:center; margin-bottom:8px;">
+          <label class="btn secondary" style="cursor:pointer; padding:9px 14px; font-size:13px; white-space:nowrap;">
+            📷 Upload image
+            <input type="file" accept="image/*" id="s-banner-upload" style="display:none;" />
+          </label>
+          <span id="s-banner-status" style="font-size:12.5px; color:#7a8891;"></span>
+        </div>
+        <input type="url" id="s-banner" value="${esc(cfg.bannerImageUrl || '')}" placeholder="…or paste an image link" />
+        <div class="hint">Recommended size: <b>1600×400px</b> (4:1 ratio). Leave blank for no banner.</div>
+        <label>Tasks</label>
+        <div id="s-tasks"></div>
+        <button class="btn secondary" id="s-addtask" type="button" style="margin-top:6px;">+ Add task</button>
+        <button class="btn full" id="s-save" style="margin-top:18px;">Save changes</button>
+      </div>
+
+      <div class="card" id="draw-card">
+        <h2>Winner draw</h2>
+        <p class="lede">Draws only from entries marked <b>eligible</b> below.</p>
+        <label class="first" style="margin-top:0;">Number of winners</label>
+        <input type="number" id="draw-count" min="1" max="${eligibleCount || 1}" value="1" style="max-width:120px;" />
+        <div id="draw-area" style="margin-top:14px;"></div>
+        <div style="display:flex; gap:10px; margin-top:14px;">
+          <button class="btn gold" id="draw-btn" style="flex:1;" ${eligibleCount === 0 ? 'disabled' : ''}>
+            🎲 Draw from ${eligibleCount} eligible entr${eligibleCount === 1 ? 'y' : 'ies'}
+          </button>
+          <button class="btn secondary" id="draw-mode-btn" type="button" ${eligibleCount === 0 ? 'disabled' : ''}>
+            🎬 Draw Mode
+          </button>
+        </div>
+        <div class="hint">Draw Mode opens a clean, full-screen reveal screen — good for recording a video of the draw.</div>
+      </div>
+
+      <div class="card">
+        <div style="display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin-bottom:14px;">
+          <h2 style="margin:0;">Entries</h2>
+          <button class="btn secondary" id="export-csv">Export CSV</button>
+        </div>
+        ${scopedEntries.length === 0 ? `
+          <div class="empty"><div class="ic">📭</div>No entries for this campaign yet.</div>
+        ` : `
+          <div style="overflow-x:auto;">
+          <table>
+            <thead><tr>
+              <th>Entrant</th><th>Tasks</th>${usesPoints ? '<th>Score</th>' : ''}<th>Proof / Verify</th><th>Status</th><th></th>
+            </tr></thead>
+            <tbody id="entries-tbody"></tbody>
+          </table>
+          </div>
+        `}
+      </div>
+    `;
+
+    document.getElementById('back-to-campaigns').addEventListener('click', (e) => {
+      e.preventDefault();
+      adminCampaignId = null;
+      renderAdmin();
+    });
+
+    // ---- Mystery Prize Picker link helper ----
+    const PRIZE_MACHINE_BASE = "https://rizzydale.github.io/prize-machine/";
+    const PM_FILES = {
+      decathlon: 'prize_machine_decathlon.html',
+      general: 'prize_machine_general.html',
+      global: 'win-global-prize-picker.html'
+    };
+    function renderPMLinks(){
+      const version = document.getElementById('pm-version').value;
+      const slug = document.getElementById('pm-slug').value.trim() || cfg.id;
+      const file = PM_FILES[version] || PM_FILES.general;
+      const publicLink = `${PRIZE_MACHINE_BASE}${file}?campaign=${encodeURIComponent(slug)}`;
+      const adminLink = `${PRIZE_MACHINE_BASE}${file}?campaign=${encodeURIComponent(slug)}&admin=1`;
+      document.getElementById('pm-links').innerHTML = `
+        <div class="toggle-row" style="border:none; padding:8px 0; align-items:flex-start;">
+          <div style="flex:1; overflow:hidden; margin-right:10px;">
+            <div style="font-size:11px; text-transform:uppercase; color:#7a8891; letter-spacing:0.05em;">Public — give to winners</div>
+            <div style="font-size:13px; word-break:break-all;">${esc(publicLink)}</div>
+          </div>
+          <button class="btn secondary" type="button" data-copy="${esc(publicLink)}" style="flex-shrink:0;">Copy</button>
+        </div>
+        <div class="toggle-row" style="border:none; padding:8px 0; align-items:flex-start;">
+          <div style="flex:1; overflow:hidden; margin-right:10px;">
+            <div style="font-size:11px; text-transform:uppercase; color:#7a8891; letter-spacing:0.05em;">Admin — only you</div>
+            <div style="font-size:13px; word-break:break-all;">${esc(adminLink)}</div>
+          </div>
+          <button class="btn secondary" type="button" data-copy="${esc(adminLink)}" style="flex-shrink:0;">Copy</button>
+        </div>
+      `;
+      document.querySelectorAll('#pm-links [data-copy]').forEach(b => {
+        b.addEventListener('click', () => {
+          navigator.clipboard.writeText(b.dataset.copy);
+          const original = b.textContent;
+          b.textContent = 'Copied!';
+          setTimeout(() => { b.textContent = original; }, 1200);
+        });
+      });
+    }
+    renderPMLinks();
+    document.getElementById('pm-version').addEventListener('change', renderPMLinks);
+    document.getElementById('pm-slug').addEventListener('input', renderPMLinks);
+
+    function renderLeaderboard(){
+      const sizeInput = document.getElementById('leaderboard-size');
+      const size = Math.min(100, Math.max(1, parseInt(sizeInput.value, 10) || 10));
+      const boardEl = document.getElementById('leaderboard-area');
+      const allScored = [...scopedEntries]
+        .map(en => ({ en, score: scoreForEntry_(en, cfg) }))
+        .sort((a, b) => b.score - a.score);
+
+      if (!allScored.length || allScored.every(b => b.score === 0)){
+        boardEl.innerHTML = `<div class="empty" style="padding:20px;"><div class="ic">🏆</div>No points earned yet — verify some tasks below.</div>`;
+        return;
+      }
+
+      const topN = allScored.slice(0, size);
+      const cutoffScore = topN[topN.length - 1].score;
+      const totalAtCutoff = allScored.filter(b => b.score === cutoffScore).length;
+      const slotsAtCutoff = topN.filter(b => b.score === cutoffScore).length;
+      const hasTie = totalAtCutoff > slotsAtCutoff && topN.length === size;
+
+      boardEl.innerHTML = `
+        <table><thead><tr><th>#</th><th>Entrant</th><th>Score</th></tr></thead><tbody>${
+          topN.map((b, i) => `<tr${b.score === cutoffScore && hasTie ? ' style="background:#fff4e2;"' : ''}><td>${i+1}</td><td>${esc(b.en.name)} — ${esc(b.en.handle||'')}${b.score === cutoffScore && hasTie ? ' <span class="pill eligible">Tied</span>' : ''}</td><td style="font-weight:700;">${b.score} pts</td></tr>`).join('')
+        }</tbody></table>
+        ${hasTie ? `
+        <div class="msg info" style="margin-top:14px;">
+          ${totalAtCutoff} people are tied at ${cutoffScore} pts for the last ${slotsAtCutoff} spot${slotsAtCutoff === 1 ? '' : 's'} in the top ${size}. Draw to decide who fills ${slotsAtCutoff === 1 ? 'it' : 'them'}.
+        </div>
+        <button class="btn gold full" id="tiebreak-btn" type="button">🎲 Draw tiebreaker</button>
+        <div id="tiebreak-area" style="margin-top:12px;"></div>
+        ` : ''}
+      `;
+
+      if (hasTie){
+        document.getElementById('tiebreak-btn').addEventListener('click', (e) => {
+          const tiedPool = allScored.filter(b => b.score === cutoffScore).map(b => b.en);
+          const area = document.getElementById('tiebreak-area');
+          e.target.disabled = true;
+          const winners = shuffle_(tiedPool).slice(0, slotsAtCutoff);
+          area.innerHTML = `
+            <div class="winner-box" style="margin-top:0;">
+              <div class="wlabel">🎲 Tiebreaker result</div>
+              ${winners.map(w => `<div style="margin-top:8px;"><div class="wname" style="font-size:20px;">${esc(w.name)}</div><div class="whandle">${esc(w.handle||'')}</div></div>`).join('')}
+            </div>`;
+        });
+      }
+    }
+    if (usesPoints){
+      renderLeaderboard();
+      document.getElementById('leaderboard-size').addEventListener('input', renderLeaderboard);
+    }
+
+    // task editor rows
+    const tasksWrap = document.getElementById('s-tasks');
+    let taskState = cfg.tasks.map(t => ({...t}));
+    function renderTaskRows(){
+      tasksWrap.innerHTML = '';
+      taskState.forEach((t, i) => {
+        const row = document.createElement('div');
+        row.className = 'task-row';
+        row.style.alignItems = 'center';
+        row.innerHTML = `
+          <div style="flex:1;">
+            <input type="text" data-i="${i}" data-f="label" value="${esc(t.label)}" style="margin-bottom:6px;" placeholder="Task label"/>
+            <input type="text" data-i="${i}" data-f="desc" value="${esc(t.desc||'')}" placeholder="Optional helper text" style="margin-bottom:6px;"/>
+            <input type="url" data-i="${i}" data-f="link" value="${esc(t.link||'')}" placeholder="Link for a button (optional — e.g. the Instagram profile to follow)" style="margin-bottom:6px;"/>
+            <input type="number" min="0" data-i="${i}" data-f="points" value="${esc(t.points||'')}" placeholder="Points (optional — leave blank for no points)" style="max-width:260px;"/>
+          </div>
+          <div class="row-actions">
+            <button type="button" class="icon-btn remove" data-remove="${i}">✕</button>
+          </div>`;
+        tasksWrap.appendChild(row);
+      });
+      tasksWrap.querySelectorAll('input').forEach(inp => {
+        inp.addEventListener('input', (e) => {
+          const i = +e.target.dataset.i, f = e.target.dataset.f;
+          taskState[i][f] = e.target.value;
+        });
+      });
+      tasksWrap.querySelectorAll('[data-remove]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          taskState.splice(+e.target.dataset.remove, 1);
+          renderTaskRows();
+        });
+      });
+    }
+    renderTaskRows();
+    document.getElementById('s-addtask').addEventListener('click', () => {
+      taskState.push({ id: 't' + Date.now(), label: "New task", desc: "", link: "", points: "" });
+      renderTaskRows();
+    });
+
+    document.getElementById('s-banner-upload').addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      const statusEl = document.getElementById('s-banner-status');
+      if (!file) return;
+      statusEl.textContent = "Uploading…";
+      statusEl.style.color = "#7a8891";
+      try {
+        const url = await uploadScreenshot(file);
+        document.getElementById('s-banner').value = url;
+        statusEl.textContent = "✓ Uploaded — click 'Save changes' to make it live.";
+        statusEl.style.color = "var(--db-green)";
+      } catch(err){
+        statusEl.textContent = "Upload failed: " + (err.message || String(err));
+        statusEl.style.color = "var(--db-red)";
+      }
+    });
+
+    document.getElementById('s-save').addEventListener('click', async () => {
+      const newCfg = {
+        id: cfg.id,
+        active: document.getElementById('s-active').checked,
+        campaignName: document.getElementById('s-name').value.trim(),
+        partnerName: document.getElementById('s-partner').value.trim(),
+        partnerHandle: document.getElementById('s-handle').value.trim(),
+        prize: document.getElementById('s-prize').value.trim(),
+        description: document.getElementById('s-description').value.trim(),
+        rules: document.getElementById('s-rules').value.trim(),
+        bannerImageUrl: document.getElementById('s-banner').value.trim(),
+        requireHandle: document.getElementById('s-req-handle').checked,
+        requireFacebook: document.getElementById('s-req-facebook').checked,
+        requireEmail: document.getElementById('s-req-email').checked,
+        requireBrandAccount: document.getElementById('s-req-decathlon').checked,
+        accountFieldLabel: document.getElementById('s-account-label').value.trim(),
+        accountSignupUrl: document.getElementById('s-account-url').value.trim(),
+        leaderboardSize: (() => { const el = document.getElementById('leaderboard-size'); return el ? Math.min(100, Math.max(1, parseInt(el.value,10)||10)) : (cfg.leaderboardSize || 10); })(),
+        tasks: taskState
+      };
+      try {
+        await saveCampaign(newCfg);
+        document.getElementById('setup-msg').innerHTML = `<div class="msg ok">Campaign settings saved.</div>`;
+      } catch(e){
+        document.getElementById('setup-msg').innerHTML = `<div class="msg err">Couldn't save — try again.</div>`;
+      }
+    });
+
+    document.getElementById('export-csv').addEventListener('click', () => {
+      const headerRow = ["Name","Instagram","Facebook","Email","Account","Tasks checked"];
+      if (usesPoints) headerRow.push("Score");
+      headerRow.push("Proof links","Status","Submitted");
+      const rows = [headerRow];
+      scopedEntries.forEach(en => {
+        const proofSummary = Object.entries(en.tasksProof || {}).map(([k,v]) => v).filter(Boolean).join(' | ');
+        const r = [en.name, en.handle, en.facebookProfile || '', en.email, en.decathlonAccount || '', `${(en.tasksDone||[]).length}/${totalTasks}`];
+        if (usesPoints) r.push(scoreForEntry_(en, cfg));
+        r.push(proofSummary, en.eligible === true ? "Eligible" : en.eligible === false ? "Rejected" : "Pending", new Date(en.ts).toLocaleString());
+        rows.push(r);
+      });
+      const csv = rows.map(r => r.map(c => `"${String(c||'').replace(/"/g,'""')}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = cfg.campaignName + '-entries.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // entries table
+    const tbody = document.getElementById('entries-tbody');
+    if (tbody){
+      scopedEntries.forEach(en => {
+        const tr = document.createElement('tr');
+        const statusPill = en.eligible === true
+          ? `<span class="pill confirmed">Eligible</span>`
+          : en.eligible === false
+          ? `<span class="pill no">Rejected</span>`
+          : `<span class="pill eligible">Pending review</span>`;
+        const taskLabels = en.taskLabels || cfg.tasks.map(t => ({ id: t.id, label: t.label, points: t.points || "" }));
+        const verified = en.taskVerified || {};
+        const proofRows = taskLabels.map(t => {
+          const url = (en.tasksProof || {})[t.id];
+          const short = t.label.length > 26 ? t.label.slice(0,26) + "…" : t.label;
+          const isVerified = !!verified[t.id];
+          const pts = Number(t.points) || 0;
+          return `<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+            <input type="checkbox" data-verify-ts="${en.ts}" data-verify-task="${esc(t.id)}" ${isVerified ? 'checked' : ''} style="accent-color:var(--db-blue);"/>
+            ${url ? `<a class="plink" href="${esc(url)}" target="_blank" rel="noopener">${esc(short)}${pts ? ` (${pts}pt)` : ''} ↗</a>` : `<span style="color:#b0b8bd;">${esc(short)} — no link</span>`}
+          </div>`;
+        }).join('');
+        const igHandle = (en.handle || '').replace(/^@/, '');
+        const fbRaw = (en.facebookProfile || '').trim();
+        const fbUrl = fbRaw ? (fbRaw.startsWith('http') ? fbRaw : 'https://facebook.com/' + fbRaw.replace(/^\//, '')) : '';
+        tr.innerHTML = `
+          <td>
+            <div style="font-weight:700;">${esc(en.name)}</div>
+            <div style="color:#7a8891;">${esc(en.handle)}</div>
+            <div style="color:#7a8891;font-size:12px;">
+              <a class="plink" style="color:inherit;" href="mailto:${esc(en.email)}">${esc(en.email)}</a>
+            </div>
+            ${en.decathlonAccount ? `<div style="color:#7a8891;font-size:12px;">Account: ${esc(en.decathlonAccount)}</div>` : ''}
+            ${igHandle ? `<a class="plink" style="font-size:12px;" href="https://instagram.com/${esc(igHandle)}" target="_blank" rel="noopener">Open their IG profile ↗</a>` : ''}
+            ${fbUrl ? `<div><a class="plink" style="font-size:12px;" href="${esc(fbUrl)}" target="_blank" rel="noopener">Open their Facebook ↗</a></div>` : ''}
+          </td>
+          <td>${(en.tasksDone||[]).length}/${totalTasks} checked</td>
+          ${usesPoints ? `<td style="font-weight:700;">${scoreForEntry_(en, cfg)} pts</td>` : ''}
+          <td style="font-size:12.5px;">${proofRows}</td>
+          <td>${statusPill}</td>
+          <td>
+            <div class="row-actions">
+              <button class="icon-btn" title="Mark eligible" data-eligible="${en.ts}">✓</button>
+              <button class="icon-btn remove" title="Reject" data-reject="${en.ts}">✕</button>
+              <button class="icon-btn remove" title="Delete entry" data-delete="${en.ts}">🗑</button>
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      tbody.querySelectorAll('[data-eligible]').forEach(b => b.addEventListener('click', async (e) => {
+        await setEligibility(e.target.dataset.eligible, true); renderCampaignManage(cfg.id);
+      }));
+      tbody.querySelectorAll('[data-reject]').forEach(b => b.addEventListener('click', async (e) => {
+        await setEligibility(e.target.dataset.reject, false); renderCampaignManage(cfg.id);
+      }));
+      tbody.querySelectorAll('[data-delete]').forEach(b => b.addEventListener('click', async (e) => {
+        if (confirm('Delete this entry permanently?')){ await deleteEntry(e.target.dataset.delete); renderCampaignManage(cfg.id); }
+      }));
+      tbody.querySelectorAll('[data-verify-ts]').forEach(cb => cb.addEventListener('change', async (e) => {
+        await setTaskVerified(e.target.dataset.verifyTs, e.target.dataset.verifyTask, e.target.checked);
+        renderCampaignManage(cfg.id);
+      }));
+    }
+
+    document.getElementById('draw-btn').addEventListener('click', () => {
+      const count = Math.max(1, parseInt(document.getElementById('draw-count').value, 10) || 1);
+      runDraw(scopedEntries.filter(e => e.eligible === true), count);
+    });
+    document.getElementById('draw-mode-btn').addEventListener('click', () => {
+      const count = Math.max(1, parseInt(document.getElementById('draw-count').value, 10) || 1);
+      renderDrawMode(cfg, scopedEntries.filter(e => e.eligible === true), count);
+    });
+  }
+
+  async function setEligibility(ts, val){
+    const keys = await kvList("entry:");
+    for (const k of keys){
+      const v = await kvGet(k);
+      if (v){
+        const parsed = JSON.parse(v.value);
+        if (String(parsed.ts) === String(ts)){
+          parsed.eligible = val;
+          await kvSet(k, JSON.stringify(parsed));
+          return;
+        }
+      }
+    }
+  }
+
+  async function setTaskVerified(ts, taskId, val){
+    const keys = await kvList("entry:");
+    for (const k of keys){
+      const v = await kvGet(k);
+      if (v){
+        const parsed = JSON.parse(v.value);
+        if (String(parsed.ts) === String(ts)){
+          parsed.taskVerified = parsed.taskVerified || {};
+          parsed.taskVerified[taskId] = val;
+          await kvSet(k, JSON.stringify(parsed));
+          return;
+        }
+      }
+    }
+  }
+
+  function renderDrawMode(cfg, pool, count){
+    count = Math.min(Math.max(1, count || 1), pool.length);
+    let remaining = [...pool];
+    let winners = [];
+
+    const overlay = document.createElement('div');
+    overlay.className = 'drawmode-overlay';
+    overlay.innerHTML = `
+      <button class="drawmode-exit" id="drawmode-exit">✕ Exit</button>
+      <div class="drawmode-eyebrow">${esc(cfg.campaignName)}</div>
+      <div class="drawmode-prize">${esc(cfg.prize)}</div>
+      <div class="drawmode-name" id="drawmode-name">Ready?</div>
+      <div class="drawmode-handle" id="drawmode-handle">&nbsp;</div>
+      <div id="drawmode-winners" style="margin:20px 0; max-width:480px;"></div>
+      <button class="drawmode-btn" id="drawmode-btn">🎲 Draw winner 1 of ${count}</button>
+      <div class="drawmode-count">${pool.length} eligible entr${pool.length === 1 ? 'y' : 'ies'} in the draw</div>
+    `;
+    document.body.appendChild(overlay);
+
+    document.getElementById('drawmode-exit').addEventListener('click', () => {
+      overlay.remove();
+    });
+
+    function renderWinnersList(){
+      const listEl = document.getElementById('drawmode-winners');
+      if (!winners.length){ listEl.innerHTML = ''; return; }
+      listEl.innerHTML = winners.map((w, i) => `
+        <div style="display:flex; justify-content:space-between; gap:16px; padding:10px 16px; background:rgba(255,255,255,0.08); border-radius:10px; margin-bottom:8px; text-align:left;">
+          <div style="font-weight:700;">#${i+1} ${esc(w.name)}</div>
+          <div style="color:#cfe4f2;">${esc(w.handle||'')}</div>
+        </div>`).join('');
+    }
+
+    function drawNext(){
+      if (!remaining.length) return;
+      const btn = document.getElementById('drawmode-btn');
+      btn.disabled = true;
+      btn.style.opacity = '0.5';
+      let i = 0;
+      const spins = 22;
+      const nameEl = document.getElementById('drawmode-name');
+      const handleEl = document.getElementById('drawmode-handle');
+      const interval = setInterval(() => {
+        const pick = remaining[Math.floor(Math.random() * remaining.length)];
+        nameEl.textContent = pick.name;
+        handleEl.textContent = pick.handle || '';
+        i++;
+        if (i >= spins){
+          clearInterval(interval);
+          const idx = Math.floor(Math.random() * remaining.length);
+          const winner = remaining[idx];
+          remaining.splice(idx, 1);
+          winners.push(winner);
+          nameEl.textContent = "🎉 " + winner.name;
+          handleEl.textContent = (winner.handle || '') + (winner.email ? ' · ' + winner.email : '');
+          renderWinnersList();
+          if (winners.length >= count){
+            btn.style.display = 'none';
+          } else {
+            btn.disabled = false;
+            btn.style.opacity = '1';
+            btn.textContent = `🎲 Draw winner ${winners.length + 1} of ${count}`;
+          }
+        }
+      }, 90);
+    }
+
+    document.getElementById('drawmode-btn').addEventListener('click', drawNext);
+  }
+
+  function shuffle_(arr){
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function runDraw(pool, count){
+    count = Math.min(Math.max(1, count || 1), pool.length);
+    const area = document.getElementById('draw-area');
+    if (!pool.length) return;
+    let i = 0;
+    const spins = 22;
+    const el = document.createElement('div');
+    el.className = 'winner-box';
+    el.innerHTML = `<div class="wlabel">Drawing…</div><div class="spin" id="spin-name">–</div>`;
+    area.innerHTML = '';
+    area.appendChild(el);
+    const interval = setInterval(() => {
+      const pick = pool[Math.floor(Math.random() * pool.length)];
+      document.getElementById('spin-name').textContent = pick.handle;
+      i++;
+      if (i >= spins){
+        clearInterval(interval);
+        const winners = shuffle_(pool).slice(0, count);
+        el.innerHTML = `
+          <div class="wlabel">🎉 ${winners.length === 1 ? 'Winner' : winners.length + ' Winners'}</div>
+          ${winners.map(w => `
+            <div style="margin-top:10px;">
+              <div class="wname" style="font-size:${winners.length > 1 ? '22px' : '30px'};">${esc(w.name)}</div>
+              <div class="whandle">${esc(w.handle)} · ${esc(w.email)}</div>
+            </div>`).join('')}
+        `;
+      }
+    }, 90);
+  }
+
+  render();
+})();
+</script>
